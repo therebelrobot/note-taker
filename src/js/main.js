@@ -24,8 +24,8 @@ var context = {
     lodash: _,
     store: store,
     Vue: Vue,
-    marked:marked,
-    moment:moment
+    marked: marked,
+    moment: moment
   }
 }
 
@@ -40,7 +40,7 @@ context.router.map({
     component: newNoteComponent(context, newNoteTemplate)
   },
   '/note/:noteId': {
-    component: displayNoteComponent(context, displayNoteTemplate),
+    component: displayNoteComponent(context, displayNoteTemplate)
   },
   '/note/:noteId/edit': {
     component: editNoteComponent(context, editNoteTemplate)

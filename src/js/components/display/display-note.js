@@ -1,8 +1,6 @@
 module.exports = function displayNoteConstructor (context, template) {
   var Vue = context.deps.Vue
-  var _ = context.deps.lodash
   var marked = context.deps.marked
-  var store = context.deps.store
   var moment = context.deps.moment
   return Vue.extend({
     template: template,
@@ -18,9 +16,9 @@ module.exports = function displayNoteConstructor (context, template) {
       console.log('display-note mounted')
       return {
         id: noteId,
-        title:note.title,
-        lastModified:moment(note.lastModified, 'X').fromNow(),
-        content:note.content
+        title: note.title,
+        lastModified: moment(note.lastModified, 'X').fromNow(),
+        content: note.content
       }
     }
   })

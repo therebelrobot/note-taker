@@ -2,8 +2,6 @@ var template = require('./new-note.html')
 
 module.exports = function (context) {
   var Vue = context.deps.Vue
-  var _ = context.deps.lodash
-  var store = context.deps.store
   var marked = context.deps.marked
   return Vue.extend({
     template: template,
@@ -25,16 +23,16 @@ module.exports = function (context) {
         return marked(this.rawContent)
       }
     },
-    methods:{
-      saveNewNote: function (event){
+    methods: {
+      saveNewNote: function (event) {
         var note = {
-          title:this.title,
-          content:this.rawContent
+          title: this.title,
+          content: this.rawContent
         }
         var newNote = context.model.saveNote(note)
-        if(newNote){
-          context.router.go('/note/'+newNote.id)
-        } else{
+        if (newNote) {
+          context.router.go('/note/' + newNote.id)
+        } else {
           console.error('error in saving note')
         }
       }

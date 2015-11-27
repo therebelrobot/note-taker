@@ -76,7 +76,6 @@ gulp.task('build', function (cb) {
     , cb)
 })
 
-
 gulp.task('server', function (cb) {
   return plugins.browsersync(paths.browsersync)
 })

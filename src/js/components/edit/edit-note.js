@@ -1,12 +1,10 @@
-module.exports = function editNoteContructor(context, template){
+module.exports = function editNoteContructor (context, template) {
   var Vue = context.deps.Vue
-  var _ = context.deps.lodash
-  var store = context.deps.store
   var marked = context.deps.marked
   return Vue.extend({
     template: template,
     replace: true,
-    data: function editNoteMount() {
+    data: function editNoteMount () {
       // retrieve url params
       var params = this.$route.params
       var noteId = params.noteId
@@ -16,8 +14,8 @@ module.exports = function editNoteContructor(context, template){
       console.log('edit-note mounted')
       return {
         id: noteId,
-        title:note.title,
-        rawContent:note.content
+        title: note.title,
+        rawContent: note.content
       }
     },
     computed: {
@@ -25,21 +23,21 @@ module.exports = function editNoteContructor(context, template){
         return marked(this.rawContent)
       }
     },
-    methods:{
-      saveNote: function (event){
+    methods: {
+      saveNote: function (event) {
         var note = {
-          id:this.id,
-          title:this.title,
-          content:this.rawContent
+          id: this.id,
+          title: this.title,
+          content: this.rawContent
         }
         var newNote = context.model.saveNote(note)
-        if(newNote){
-          context.router.go('/note/'+newNote.id)
-        } else{
+        if (newNote) {
+          context.router.go('/note/' + newNote.id)
+        } else {
           console.error('error in saving note')
         }
       },
-      deleteNote: function(event){
+      deleteNote: function (event) {
         context.model.deleteNote(this.id)
         context.router.go('/')
       }
