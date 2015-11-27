@@ -1,0 +1,56 @@
+{
+  "src":{
+    "root":"./src",
+    "js":{
+      "entry":"./src/js/main.js"
+    },
+    "less":{
+      "entry":"./src/less/main.less"
+    },
+    "copy":{
+      "index":["src/html/*.html"],
+      "img":["src/img/**/*"],
+      "misc":["src/misc/**/*"]
+    }
+  },
+  "dest":{
+    "root":"./",
+    "env":{
+      "name":"env.json",
+      "path":"./js"
+    },
+    "js":{
+      "name":"bundle.js",
+      "path":"./js"
+    },
+    "css":{
+      "name":"style.css",
+      "path":"./css"
+    },
+    "copy":{
+      "index":"",
+      "img":"img",
+      "misc":"misc/"
+    }
+  },
+  "watch":{
+    "js":["./src/js/**/*.js","./src/js/**/*.html"],
+    "less":"./src/less/**/*.less",
+    "copy":["src/**/*.html", "src/img/**/*", "src/misc/**/*"]
+  },
+  "browsersync": {
+    "port": 8911,
+    "open": "local",
+
+    "server": {
+      "baseDir": ""
+    },
+
+    "ui": {
+      "port": 8080,
+      "weinre": {
+        "port": 9090
+      }
+    }
+  }
+}

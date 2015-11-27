@@ -1,0 +1,87 @@
+.floater {
+  position: fixed;
+  right: 15px;
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  text-align: center;
+  padding-top: 12px;
+  cursor: pointer;
+  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.55);
+  z-index: 999;
+}
+.floater.add-note {
+  bottom: 15px;
+  background: #0a0;
+}
+.floater.edit-note {
+  bottom: 80px;
+  background: #00a;
+}
+.floater i {
+  font-size: 2em;
+  color: white;
+}
+.content {
+  padding: 0px 15px 90px;
+  min-height: calc( 100% - 124px );
+}
+footer.navbar {
+  margin-bottom: 0;
+}
+.preview-pane {
+  padding: 15px;
+}
+.preview-pane .container {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.preview-pane .container label.preview-title {
+  position: relative;
+  top: -15px;
+  left: -10px;
+  padding: 5px;
+  background: white;
+}
+.preview-pane .container > h2 {
+  margin-top: 0;
+}
+.preview-pane .container > h2 + h4 {
+  margin-top: 20px;
+  font-size: 1em;
+}
+.markdown-mark {
+  width: 20px;
+  margin-top: 3px;
+  opacity: 0.55;
+}
+.markdown-mark + em {
+  position: relative;
+  top: 2px;
+  font-size: 0.75em;
+}
+img {
+  max-width: 100%;
+}
+ul.all-notes {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul.all-notes li.note {
+  padding: 15px;
+  border: solid 1px rgba(0, 0, 0, 0.25);
+  border-bottom: none;
+}
+ul.all-notes li.note:last-child {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.25);
+}
+.delete-all-notes {
+  margin-top: 25px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+/*# sourceMappingURL=maps/style.css.map */

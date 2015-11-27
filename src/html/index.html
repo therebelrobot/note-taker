@@ -1,0 +1,65 @@
+<html>
+
+<head>
+  <title>Note Taker App</title>
+  <meta name=”description” content="A mobile-first application for taking notes">
+
+  <!-- Schema.org markup for Google+ -->
+  <meta itemprop="name" content="Note Taker">
+  <meta itemprop="description" content="A mobile-first application for taking notes">
+  <meta itemprop="image" content="/icon.png">
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@therebelrobot">
+  <meta name="twitter:title" content="Note Taker">
+  <meta name="twitter:description" content="A mobile-first application for taking notes">
+  <meta name="twitter:creator" content="@therebelrobot">
+  <meta name="twitter:image:src" content="/icon.png">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Note Taker" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="#" />
+  <meta property="og:image" content="/icon.png" />
+  <meta property="og:description" content="A mobile-first application for taking notes" />
+  <meta property="og:site_name" content="Note Taker" />
+  <meta property="fb:admins" content="582330320" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body id="note-taker-app">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <i class="fa fa-pencil"></i> Note Taker
+        </a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <!-- route outlet -->
+  <router-view></router-view>
+
+  <footer class="navbar navbar-default">
+    <div class="container">
+      <p class="navbar-text">
+        ISC Licensed &copy; 2015 Trent Oswald
+      </p>
+    </div>
+  </footer>
+  <script type="text/javascript" src="js/bundle.js"></script>
+</body>
+
+</html>

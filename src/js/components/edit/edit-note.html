@@ -1,0 +1,37 @@
+<section class="content edit-note container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Editing Note</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="edit-pane col-md-6">
+      <div class="form-group">
+        <label for="note-title">Note Title</label>
+        <input id="note-title" type="text" class="form-control" placeholder="Note Title" v-model="title">
+      </div>
+      <div class="form-group">
+        <label for="note-content">Note</label>
+        <textarea id="note-title" class="form-control" rows="8" v-model="rawContent"></textarea>
+        <small class="pull-right"><img class="markdown-mark" src="/img/markdown-mark.svg" /> <em>Markdown Formatting</em></small>
+      </div>
+    </div>
+    <div class="preview-pane col-md-6">
+      <div class="container">
+        <label class="preview-title">Note Preview</label>
+        <h2>{{ title }}</h2>
+        <article>
+          {{{ content }}}
+        </article>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary" v-on:click="saveNote">Save Changes</button>
+      <button class="btn btn-default" v-link="{ path: '/note/' + id }">Cancel</button>
+      <button class="btn btn-default" v-on:click="deleteNote">Delete</button>
+    </div>
+  </div>
+</section>

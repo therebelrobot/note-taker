@@ -1,0 +1,25 @@
+<section class="content display-note container">
+  <div class="row">
+    <div class="col-md-12">
+      <a v-link="{ path: '/' }"><i class="fa fa-arrow-left"></i> Go back to notes</a>
+      <h2>{{ title }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="meta-pane col-md-6 col-md-push-6">
+      <em>Last updated {{ lastModified }}</em>
+    </div>
+    <div class="content-pane col-md-6 col-md-pull-6">
+      <article>
+        {{{ content }}}
+      </article>
+    </div>
+  </div>
+
+  <div class="floater edit-note" v-link="{ path: '/note/' + id + '/edit' }">
+    <i class="fa fa-pencil"></i>
+  </div>
+  <div class="floater add-note" v-link="{ path: '/new' }">
+    <i class="fa fa-plus"></i>
+  </div>
+</section>

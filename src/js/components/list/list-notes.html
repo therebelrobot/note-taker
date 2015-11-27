@@ -1,0 +1,16 @@
+<section class="content list-notes container">
+  <h2>Saved notes</h2>
+  <ul class="all-notes">
+    <li v-if="notes.length" class="note" v-for="note in notes" v-link="{ path: '/note/' + note.id }">
+      <span class="title">{{ note.title }}</span>
+      <span class="date pull-right">{{ note.lastModified }}</span>
+    </li>
+    <li v-if="notes.length < 1" class="note" v-link="{ path: '/new' }">
+      <span class="title">No saved notes. Add one now!</span>
+    </li>
+  </ul>
+  <a class="delete-all-notes" v-if="notes.length" v-on:click="deleteAllNotes"><i class="fa fa-close"></i> Delete all notes</a>
+  <div class="floater add-note" v-link="{ path: '/new' }">
+    <i class="fa fa-plus"></i>
+  </div>
+</section>
