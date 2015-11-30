@@ -29004,161 +29004,6 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = Vue;
 }).call(this,require('_process'))
 },{"_process":1}],8:[function(require,module,exports){
-module.exports = '<section class="content display-note container">\n  <div class="row">\n    <div class="col-md-12">\n      <a v-link="{ path: \'/\' }"><i class="fa fa-arrow-left"></i> Go back to notes</a>\n      <h2>{{ title }}</h2>\n    </div>\n  </div>\n  <div class="row">\n    <div class="meta-pane col-md-6 col-md-push-6">\n      <em>Last updated {{ lastModified }}</em>\n    </div>\n    <div class="content-pane col-md-6 col-md-pull-6">\n      <article>\n        {{{ content }}}\n      </article>\n    </div>\n  </div>\n\n  <div class="floater edit-note" v-link="{ path: \'/note/\' + id + \'/edit\' }">\n    <i class="fa fa-pencil"></i>\n  </div>\n  <div class="floater add-note" v-link="{ path: \'/new\' }">\n    <i class="fa fa-plus"></i>\n  </div>\n</section>\n';
-},{}],9:[function(require,module,exports){
-module.exports = function displayNoteConstructor (context, template) {
-  var Vue = context.deps.Vue
-  var marked = context.deps.marked
-  var moment = context.deps.moment
-  return Vue.extend({
-    template: template,
-    replace: true,
-    data: function displayNoteMount () {
-      // retrieve url params
-      var params = this.$route.params
-      var noteId = params.noteId
-      // retrieve Note from localstorage
-      var note = context.model.getNote(noteId)
-      note.content = marked(note.content)
-      // if not there, route to note not found
-      console.log('display-note mounted')
-      return {
-        id: noteId,
-        title: note.title,
-        lastModified: moment(note.lastModified, 'X').fromNow(),
-        content: note.content
-      }
-    }
-  })
-}
-
-},{}],10:[function(require,module,exports){
-module.exports = '<section class="content edit-note container">\n\n  <div class="row">\n    <div class="col-md-12">\n      <h2>Editing Note</h2>\n    </div>\n  </div>\n  <div class="row">\n    <div class="edit-pane col-md-6">\n      <div class="form-group">\n        <label for="note-title">Note Title</label>\n        <input id="note-title" type="text" class="form-control" placeholder="Note Title" v-model="title">\n      </div>\n      <div class="form-group">\n        <label for="note-content">Note</label>\n        <textarea id="note-title" class="form-control" rows="8" v-model="rawContent"></textarea>\n        <small class="pull-right"><img class="markdown-mark" src="/img/markdown-mark.svg" /> <em>Markdown Formatting</em></small>\n      </div>\n    </div>\n    <div class="preview-pane col-md-6">\n      <div class="container">\n        <label class="preview-title">Note Preview</label>\n        <h2>{{ title }}</h2>\n        <article>\n          {{{ content }}}\n        </article>\n      </div>\n    </div>\n  </div>\n  <div class="row">\n    <div class="col-md-12">\n      <button class="btn btn-primary" v-on:click="saveNote">Save Changes</button>\n      <button class="btn btn-default" v-link="{ path: \'/note/\' + id }">Cancel</button>\n      <button class="btn btn-default" v-on:click="deleteNote">Delete</button>\n    </div>\n  </div>\n</section>\n';
-},{}],11:[function(require,module,exports){
-module.exports = function editNoteContructor (context, template) {
-  var Vue = context.deps.Vue
-  var marked = context.deps.marked
-  return Vue.extend({
-    template: template,
-    replace: true,
-    data: function editNoteMount () {
-      // retrieve url params
-      var params = this.$route.params
-      var noteId = params.noteId
-      // retrieve Note from localstorage
-      var note = context.model.getNote(noteId)
-      // if not there, route to note not found
-      console.log('edit-note mounted')
-      return {
-        id: noteId,
-        title: note.title,
-        rawContent: note.content
-      }
-    },
-    computed: {
-      content: function () {
-        return marked(this.rawContent)
-      }
-    },
-    methods: {
-      saveNote: function (event) {
-        var note = {
-          id: this.id,
-          title: this.title,
-          content: this.rawContent
-        }
-        var newNote = context.model.saveNote(note)
-        if (newNote) {
-          context.router.go('/note/' + newNote.id)
-        } else {
-          console.error('error in saving note')
-        }
-      },
-      deleteNote: function (event) {
-        context.model.deleteNote(this.id)
-        context.router.go('/')
-      }
-    }
-  })
-}
-
-},{}],12:[function(require,module,exports){
-module.exports = '<section class="content list-notes container">\n  <h2>Saved notes</h2>\n  <ul class="all-notes">\n    <li v-if="notes.length" class="note" v-for="note in notes" v-link="{ path: \'/note/\' + note.id }">\n      <span class="title">{{ note.title }}</span>\n      <span class="date pull-right">{{ note.lastModified }}</span>\n    </li>\n    <li v-if="notes.length < 1" class="note" v-link="{ path: \'/new\' }">\n      <span class="title">No saved notes. Add one now!</span>\n    </li>\n  </ul>\n  <a class="delete-all-notes" v-if="notes.length" v-on:click="deleteAllNotes"><i class="fa fa-close"></i> Delete all notes</a>\n  <div class="floater add-note" v-link="{ path: \'/new\' }">\n    <i class="fa fa-plus"></i>\n  </div>\n</section>\n';
-},{}],13:[function(require,module,exports){
-module.exports = function listNoteConstructor (context, template) {
-  var Vue = context.deps.Vue
-  var _ = context.deps.lodash
-  var moment = context.deps.moment
-  return Vue.extend({
-    template: template,
-    replace: true,
-    data: function listNoteMount () {
-      // retrieve Notes from localstorage
-      var notesList = context.model.getList()
-      notesList = _.map(notesList, function (note) {
-        note.lastModified = moment(note.lastModified, 'X').fromNow()
-        return note
-      })
-      console.log('list-notes mounted')
-      return {
-        notes: notesList
-      }
-    },
-    methods: {
-      deleteAllNotes: function (event) {
-        context.model.deleteAllNotes()
-        this.notes = []
-      }
-    }
-  })
-}
-
-},{}],14:[function(require,module,exports){
-module.exports = '<section class="content new-note container">\n  <div class="row">\n    <div class="col-md-12">\n      <h2>New Note</h2>\n    </div>\n  </div>\n  <div class="row">\n    <div class="new-pane col-md-6">\n      <div class="form-group">\n        <label for="note-title">Note Title</label>\n        <input id="note-title" type="text" class="form-control" placeholder="Note Title" v-model="title">\n      </div>\n      <div class="form-group">\n        <label for="note-content">Note</label>\n        <textarea id="note-title" class="form-control" rows="8" v-model="rawContent"></textarea>\n        <small class="pull-right"><img class="markdown-mark" src="/img/markdown-mark.svg" /> <em>Markdown Formatting</em></small>\n      </div>\n    </div>\n    <div class="preview-pane col-md-6">\n      <div class="container">\n        <label class="preview-title">Note Preview</label>\n        <h2>{{ title }}</h2>\n        <article>\n          {{{ content }}}\n        </article>\n      </div>\n    </div>\n  </div>\n  <div class="row">\n    <div class="col-md-12">\n      <button class="btn btn-primary" v-on:click="saveNewNote">Save Changes</button>\n      <button class="btn btn-default" v-link="{ path: \'/\' }">Cancel</button>\n    </div>\n  </div>\n</section>\n';
-},{}],15:[function(require,module,exports){
-var template = require('./new-note.html')
-
-module.exports = function (context) {
-  var Vue = context.deps.Vue
-  var marked = context.deps.marked
-  return Vue.extend({
-    template: template,
-    replace: true,
-    data: function () {
-      var note = {
-        title: '',
-        content: ''
-      }
-      // if not there, route to note not found
-      console.log('new-note mounted')
-      return {
-        title: note.title,
-        rawContent: note.content
-      }
-    },
-    computed: {
-      content: function () {
-        return marked(this.rawContent)
-      }
-    },
-    methods: {
-      saveNewNote: function (event) {
-        var note = {
-          title: this.title,
-          content: this.rawContent
-        }
-        var newNote = context.model.saveNote(note)
-        if (newNote) {
-          context.router.go('/note/' + newNote.id)
-        } else {
-          console.error('error in saving note')
-        }
-      }
-    }
-  })
-}
-
-},{"./new-note.html":14}],16:[function(require,module,exports){
 var Vue = require('vue')
 var VueRouter = require('vue-router')
 var _ = require('lodash')
@@ -29168,15 +29013,15 @@ var moment = require('moment')
 
 Vue.use(VueRouter)
 
-// load components
-var newNoteComponent = require('./components/new/new-note')
-var newNoteTemplate = require('./components/new/new-note.html')
-var editNoteComponent = require('./components/edit/edit-note')
-var editNoteTemplate = require('./components/edit/edit-note.html')
-var displayNoteComponent = require('./components/display/display-note')
-var displayNoteTemplate = require('./components/display/display-note.html')
-var listNotesComponent = require('./components/list/list-notes')
-var listNotesTemplate = require('./components/list/list-notes.html')
+// load views
+var newNoteView = require('./views/new/new-note')
+var newNoteTemplate = require('./views/new/new-note.html')
+var editNoteView = require('./views/edit/edit-note')
+var editNoteTemplate = require('./views/edit/edit-note.html')
+var displayNoteView = require('./views/display/display-note')
+var displayNoteTemplate = require('./views/display/display-note.html')
+var listNotesView = require('./views/list/list-notes')
+var listNotesTemplate = require('./views/list/list-notes.html')
 
 // Bootstrap application
 var App = Vue.extend({})
@@ -29195,22 +29040,22 @@ context.model = require('./model')(context)
 context.router = new VueRouter()
 context.router.map({
   '/': {
-    component: listNotesComponent(context, listNotesTemplate)
+    component: listNotesView(context, listNotesTemplate)
   },
   '/new': {
-    component: newNoteComponent(context, newNoteTemplate)
+    component: newNoteView(context, newNoteTemplate)
   },
   '/note/:noteId': {
-    component: displayNoteComponent(context, displayNoteTemplate)
+    component: displayNoteView(context, displayNoteTemplate)
   },
   '/note/:noteId/edit': {
-    component: editNoteComponent(context, editNoteTemplate)
+    component: editNoteView(context, editNoteTemplate)
   }
 })
 
 context.router.start(App, '#note-taker-app')
 
-},{"./components/display/display-note":9,"./components/display/display-note.html":8,"./components/edit/edit-note":11,"./components/edit/edit-note.html":10,"./components/list/list-notes":13,"./components/list/list-notes.html":12,"./components/new/new-note":15,"./components/new/new-note.html":14,"./model":17,"lodash":2,"marked":3,"moment":4,"store2":5,"vue":7,"vue-router":6}],17:[function(require,module,exports){
+},{"./model":9,"./views/display/display-note":11,"./views/display/display-note.html":10,"./views/edit/edit-note":13,"./views/edit/edit-note.html":12,"./views/list/list-notes":15,"./views/list/list-notes.html":14,"./views/new/new-note":17,"./views/new/new-note.html":16,"lodash":2,"marked":3,"moment":4,"store2":5,"vue":7,"vue-router":6}],9:[function(require,module,exports){
 module.exports = function (context) {
   context.deps.store = context.deps.store.namespace('note-taker')
   var store = context.deps.store
@@ -29425,4 +29270,159 @@ function deleteAllNotes () {
   }
 }
 
-},{}]},{},[16]);
+},{}],10:[function(require,module,exports){
+module.exports = '<section class="content display-note container">\n  <div class="row">\n    <div class="col-md-12">\n      <a v-link="{ path: \'/\' }"><i class="fa fa-arrow-left"></i> Go back to notes</a>\n      <h2>{{ title }}</h2>\n    </div>\n  </div>\n  <div class="row">\n    <div class="meta-pane col-md-6 col-md-push-6">\n      <em>Last updated {{ lastModified }}</em>\n    </div>\n    <div class="content-pane col-md-6 col-md-pull-6">\n      <article>\n        {{{ content }}}\n      </article>\n    </div>\n  </div>\n\n  <div class="floater edit-note" v-link="{ path: \'/note/\' + id + \'/edit\' }">\n    <i class="fa fa-pencil"></i>\n  </div>\n  <div class="floater add-note" v-link="{ path: \'/new\' }">\n    <i class="fa fa-plus"></i>\n  </div>\n</section>\n';
+},{}],11:[function(require,module,exports){
+module.exports = function displayNoteConstructor (context, template) {
+  var Vue = context.deps.Vue
+  var marked = context.deps.marked
+  var moment = context.deps.moment
+  return Vue.extend({
+    template: template,
+    replace: true,
+    data: function displayNoteMount () {
+      // retrieve url params
+      var params = this.$route.params
+      var noteId = params.noteId
+      // retrieve Note from localstorage
+      var note = context.model.getNote(noteId)
+      note.content = marked(note.content)
+      // if not there, route to note not found
+      console.log('display-note mounted')
+      return {
+        id: noteId,
+        title: note.title,
+        lastModified: moment(note.lastModified, 'X').fromNow(),
+        content: note.content
+      }
+    }
+  })
+}
+
+},{}],12:[function(require,module,exports){
+module.exports = '<section class="content edit-note container">\n\n  <div class="row">\n    <div class="col-md-12">\n      <h2>Editing Note</h2>\n    </div>\n  </div>\n  <div class="row">\n    <div class="edit-pane col-md-6">\n      <div class="form-group">\n        <label for="note-title">Note Title</label>\n        <input id="note-title" type="text" class="form-control" placeholder="Note Title" v-model="title">\n      </div>\n      <div class="form-group">\n        <label for="note-content">Note</label>\n        <textarea id="note-title" class="form-control" rows="8" v-model="rawContent"></textarea>\n        <small class="pull-right"><img class="markdown-mark" src="/img/markdown-mark.svg" /> <em>Markdown Formatting</em></small>\n      </div>\n    </div>\n    <div class="preview-pane col-md-6">\n      <div class="container">\n        <label class="preview-title">Note Preview</label>\n        <h2>{{ title }}</h2>\n        <article>\n          {{{ content }}}\n        </article>\n      </div>\n    </div>\n  </div>\n  <div class="row">\n    <div class="col-md-12">\n      <button class="btn btn-primary" v-on:click="saveNote">Save Changes</button>\n      <button class="btn btn-default" v-link="{ path: \'/note/\' + id }">Cancel</button>\n      <button class="btn btn-default" v-on:click="deleteNote">Delete</button>\n    </div>\n  </div>\n</section>\n';
+},{}],13:[function(require,module,exports){
+module.exports = function editNoteContructor (context, template) {
+  var Vue = context.deps.Vue
+  var marked = context.deps.marked
+  return Vue.extend({
+    template: template,
+    replace: true,
+    data: function editNoteMount () {
+      // retrieve url params
+      var params = this.$route.params
+      var noteId = params.noteId
+      // retrieve Note from localstorage
+      var note = context.model.getNote(noteId)
+      // if not there, route to note not found
+      console.log('edit-note mounted')
+      return {
+        id: noteId,
+        title: note.title,
+        rawContent: note.content
+      }
+    },
+    computed: {
+      content: function () {
+        return marked(this.rawContent)
+      }
+    },
+    methods: {
+      saveNote: function (event) {
+        var note = {
+          id: this.id,
+          title: this.title,
+          content: this.rawContent
+        }
+        var newNote = context.model.saveNote(note)
+        if (newNote) {
+          context.router.go('/note/' + newNote.id)
+        } else {
+          console.error('error in saving note')
+        }
+      },
+      deleteNote: function (event) {
+        context.model.deleteNote(this.id)
+        context.router.go('/')
+      }
+    }
+  })
+}
+
+},{}],14:[function(require,module,exports){
+module.exports = '<section class="content list-notes container">\n  <h2>Saved notes</h2>\n  <ul class="all-notes">\n    <li v-if="notes.length" class="note" v-for="note in notes" v-link="{ path: \'/note/\' + note.id }">\n      <span class="title">{{ note.title }}</span>\n      <span class="date pull-right">{{ note.lastModified }}</span>\n    </li>\n    <li v-if="notes.length < 1" class="note" v-link="{ path: \'/new\' }">\n      <span class="title">No saved notes. Add one now!</span>\n    </li>\n  </ul>\n  <a class="delete-all-notes" v-if="notes.length" v-on:click="deleteAllNotes"><i class="fa fa-close"></i> Delete all notes</a>\n  <div class="floater add-note" v-link="{ path: \'/new\' }">\n    <i class="fa fa-plus"></i>\n  </div>\n</section>\n';
+},{}],15:[function(require,module,exports){
+module.exports = function listNoteConstructor (context, template) {
+  var Vue = context.deps.Vue
+  var _ = context.deps.lodash
+  var moment = context.deps.moment
+  return Vue.extend({
+    template: template,
+    replace: true,
+    data: function listNoteMount () {
+      // retrieve Notes from localstorage
+      var notesList = context.model.getList()
+      notesList = _.map(notesList, function (note) {
+        note.lastModified = moment(note.lastModified, 'X').fromNow()
+        return note
+      })
+      console.log('list-notes mounted')
+      return {
+        notes: notesList
+      }
+    },
+    methods: {
+      deleteAllNotes: function (event) {
+        context.model.deleteAllNotes()
+        this.notes = []
+      }
+    }
+  })
+}
+
+},{}],16:[function(require,module,exports){
+module.exports = '<section class="content new-note container">\n  <div class="row">\n    <div class="col-md-12">\n      <h2>New Note</h2>\n    </div>\n  </div>\n  <div class="row">\n    <div class="new-pane col-md-6">\n      <div class="form-group">\n        <label for="note-title">Note Title</label>\n        <input id="note-title" type="text" class="form-control" placeholder="Note Title" v-model="title">\n      </div>\n      <div class="form-group">\n        <label for="note-content">Note</label>\n        <textarea id="note-title" class="form-control" rows="8" v-model="rawContent"></textarea>\n        <small class="pull-right"><img class="markdown-mark" src="/img/markdown-mark.svg" /> <em>Markdown Formatting</em></small>\n      </div>\n    </div>\n    <div class="preview-pane col-md-6">\n      <div class="container">\n        <label class="preview-title">Note Preview</label>\n        <h2>{{ title }}</h2>\n        <article>\n          {{{ content }}}\n        </article>\n      </div>\n    </div>\n  </div>\n  <div class="row">\n    <div class="col-md-12">\n      <button class="btn btn-primary" v-on:click="saveNewNote">Save Changes</button>\n      <button class="btn btn-default" v-link="{ path: \'/\' }">Cancel</button>\n    </div>\n  </div>\n</section>\n';
+},{}],17:[function(require,module,exports){
+var template = require('./new-note.html')
+
+module.exports = function (context) {
+  var Vue = context.deps.Vue
+  var marked = context.deps.marked
+  return Vue.extend({
+    template: template,
+    replace: true,
+    data: function () {
+      var note = {
+        title: '',
+        content: ''
+      }
+      // if not there, route to note not found
+      console.log('new-note mounted')
+      return {
+        title: note.title,
+        rawContent: note.content
+      }
+    },
+    computed: {
+      content: function () {
+        return marked(this.rawContent)
+      }
+    },
+    methods: {
+      saveNewNote: function (event) {
+        var note = {
+          title: this.title,
+          content: this.rawContent
+        }
+        var newNote = context.model.saveNote(note)
+        if (newNote) {
+          context.router.go('/note/' + newNote.id)
+        } else {
+          console.error('error in saving note')
+        }
+      }
+    }
+  })
+}
+
+},{"./new-note.html":16}]},{},[8]);

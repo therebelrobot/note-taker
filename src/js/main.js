@@ -7,15 +7,15 @@ var moment = require('moment')
 
 Vue.use(VueRouter)
 
-// load components
-var newNoteComponent = require('./components/new/new-note')
-var newNoteTemplate = require('./components/new/new-note.html')
-var editNoteComponent = require('./components/edit/edit-note')
-var editNoteTemplate = require('./components/edit/edit-note.html')
-var displayNoteComponent = require('./components/display/display-note')
-var displayNoteTemplate = require('./components/display/display-note.html')
-var listNotesComponent = require('./components/list/list-notes')
-var listNotesTemplate = require('./components/list/list-notes.html')
+// load views
+var newNoteView = require('./views/new/new-note')
+var newNoteTemplate = require('./views/new/new-note.html')
+var editNoteView = require('./views/edit/edit-note')
+var editNoteTemplate = require('./views/edit/edit-note.html')
+var displayNoteView = require('./views/display/display-note')
+var displayNoteTemplate = require('./views/display/display-note.html')
+var listNotesView = require('./views/list/list-notes')
+var listNotesTemplate = require('./views/list/list-notes.html')
 
 // Bootstrap application
 var App = Vue.extend({})
@@ -34,16 +34,16 @@ context.model = require('./model')(context)
 context.router = new VueRouter()
 context.router.map({
   '/': {
-    component: listNotesComponent(context, listNotesTemplate)
+    component: listNotesView(context, listNotesTemplate)
   },
   '/new': {
-    component: newNoteComponent(context, newNoteTemplate)
+    component: newNoteView(context, newNoteTemplate)
   },
   '/note/:noteId': {
-    component: displayNoteComponent(context, displayNoteTemplate)
+    component: displayNoteView(context, displayNoteTemplate)
   },
   '/note/:noteId/edit': {
-    component: editNoteComponent(context, editNoteTemplate)
+    component: editNoteView(context, editNoteTemplate)
   }
 })
 
