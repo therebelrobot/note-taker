@@ -1,5 +1,5 @@
 TN:
-SF:/Users/therebelrobot/git/personal/note-taker/src/js/components/display/display-note.spec.js
+SF:/Users/therebelrobot/git/personal/note-taker/src/js/views/display/display-note.spec.js
 FN:9,(anonymous_1)
 FN:10,(anonymous_2)
 FNF:2
@@ -18,7 +18,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:/Users/therebelrobot/git/personal/note-taker/src/js/components/display/display-note.js
+SF:/Users/therebelrobot/git/personal/note-taker/src/js/views/display/display-note.js
 FN:1,displayNoteConstructor
 FN:8,displayNoteMount
 FNF:2

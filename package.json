@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "npm install && ./node_modules/gulp/bin/gulp.js",
+    "build": "npm install && ./node_modules/gulp/bin/gulp.js build",
     "pretest": "standard",
     "test": "istanbul cover _mocha --"
   },
