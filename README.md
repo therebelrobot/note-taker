@@ -61,6 +61,8 @@ npm start
 
 ### Tests
 
+*Note: tests for this project are still under construction, however the structure for them are in place. Each view is injected with all dependencies, which can in turn be mocked as necessary for testing various functionality.*
+
 This project runs unit tests using `mocha` and coverage reports using `istanbul`. To run tests and build coverage reports, run:
 
 ```bash
