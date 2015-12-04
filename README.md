@@ -1,4 +1,7 @@
 # note-taker
+
+[![Just Build Something](https://img.shields.io/badge/just-build_something-blue.svg?style=flat-square)](https://github.com/therebelrobot/justbuildsomething)
+
 A mobile-first app to take notes. Live version available at [therebelrobot.github.io/note-taker](http://therebelrobot.github.io/note-taker). 
 
 Built in part as a test of the new v1 of [Vue.js](http://vuejs.org/)
